@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Underrail character builder Chinese</title>
+	<link rel="icon" href="/favicon.ico">
+	<meta name="description" content="Underrail character build calculator & theorycrafting tool">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<style id="css-feat">.feat:disabled { display:none }</style><style id="css-featc"></style>
+	<style id="css-spec">.spec>.disabled { display:none }</style>
+	<style id="css-dlc">.core,.xpbl,.dlc2 { display:none }</style>
+	<style id="css-tabs"></style>
+	<noscript><style>main { filter:brightness(0.2); pointer-events:none }</style></noscript>
+	<script src="script.js" defer></script>
+</head>
+<body>
+<noscript id="noscript">This thing needs JavaScript to run! ;_;</noscript>
+<main>
+<article id="base">
+	<header>
+		<h2>Base</h2><p id="base_max" class="max" title="Minimize tab">X</p>
+	</header>
+	<section>
+		<p data-tooltip="会加成：&#10; 近战（除非敏捷更高）&#10; 威吓（除非意志更高）&#10;&#10; 近战爆率&#10; 负重上限&#10; 坚韧">力量:<mark id="STR"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 近战（除非力量更高）&#10; 投掷&#10; 开锁&#10; 偷窃&#10; 陷阱&#10;&#10; 近战暴击率&#10; 先攻&#10; 减少轻型武器AP消耗">灵巧:<mark id="DEX"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 闪避&#10; 躲闪&#10; 潜行&#10;&#10; 移动点数&#10; 先攻">敏捷:<mark id="AGI"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 不加成技能&#10;&#10; 生命值&#10; 坚韧">体质:<mark id="CON"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 枪械&#10; 弩&#10;&#10; 探查&#10; 陷阱探查">感知:<mark id="PER"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 精神控制&#10; 热力操纵&#10; 念动力&#10; 时间操控&#10; 说服&#10; 威吓（除非力量更高）&#10;&#10; 灵能回复&#10; 坚毅&#10; 坚韧">意志:<mark id="WIL"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p data-tooltip="会加成：&#10; 黑客&#10; 机械&#10; 电子&#10; 化学&#10; 生物&#10; 裁缝&#10; 商业&#10;&#10; 灵能回复">智力:<mark id="INT"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>属性统计</h3>
+		<div class="columns">
+			<p data-tooltip="受到以下影响:&#10; 等级&#10; 体质&#10; 游戏难度">血量: <mark id="hp">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 专长">灵能值: <mark id="psip">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 灵能值" class="tldr">灵能储量: <mark id="psi5">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 意志&#10; 智力">灵能回复: <mark id="psir">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 智力">灵能回路: <mark id="psis">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 力量">负重: <mark id="cw">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 敏捷" class="tldr">移动点数: <mark id="mp">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 灵巧&#10; 敏捷">先攻: <mark id="ini">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 等级&#10; 60% 体质&#10; 20% 力量&#10; 20% 意志">坚韧: <mark id="fort">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 等级&#10; 意志">坚毅: <mark id="res">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 等级&#10; 感知">探查: <mark id="det">   ?</mark></p>
+			<p data-tooltip="受到以下影响:&#10; 探查&#10; 陷阱技能" class="tldr">陷阱探查: <mark id="trd">   ?</mark></p>
+		</div>
+
+		<h3>选项</h3>
+		<div class="columns">
+			<p data-tooltip="设置等级">等级: <mark id="lvl"> ?</mark><input type="button" value="+"/><input type="button" value="-"/></p>
+			<p data-tooltip="显示来自游戏DLC的扩展内容：远征DLC"><label class="xpblhue">远征 DLC <input type="checkbox" autocomplete="off" id="expedition"/></label></p>
+			<p data-tooltip="显示来自游戏DLC的扩展内容：重任DLC"><label class="">重任 DLC <input type="checkbox" autocomplete="off" id="heavyduty"/></label></p>
+			<p data-tooltip="将当前构建另存为...&#10;加载构建"><input class="misc" type="button" id="save" value=" 保存 "/><input class="misc" type="button" id="load" value=" 加载 "/></p>
+			<p data-tooltip="获取要构建的URL而不保存&#10;重置当前构建和选项"><input class="misc" type="button" id="URL" value=" 链接 "/><input class="misc" type="button" id="reset" value=" 重置 "/></p>
+			<p style="display:none;" data-tooltip="Switch between Underrail and Infusion modes"><label class="infusion">Infusion mode <input type="checkbox" autocomplete="off" id="infusion"/></label></p>
+		</div>
+
+		<h3>额外增益</h3>
+		<details class="columns"><summary data-tooltip="难度和各种属性/技能奖励&#10;这些不会保存在构建链接中">显示/隐藏</summary>
+			<form data-tooltip="选择难度&#10;(影响血量)" autocomplete="off">
+				<label><input type="radio" name="diff" value="3"> 简单</label>
+				<label><input type="radio" name="diff" value="1.5" checked> 普通</label>
+				<label><input type="radio" name="diff" value="1"> 困难+</label>
+			</form>
+
+			<p data-tooltip="显示玩家房屋工作台技能增益&#10;(所有制作技能加15%)"><label>工作台增益 <input type="checkbox" autocomplete="off" id="craftbonus"/></label>
+			</p>
+
+			<p data-tooltip="选择食物增益" class="mozjank">食物 <select autocomplete="off" id="food">
+				<option value="none" selected>无</option>
+				<option value="junkfood">垃圾场惊喜 (随机)</option>
+				<option value="rathoundBBQ">鼠犬串烧</option>
+				<option value="eelSandwich">鳗鱼三明治</option>
+				<option value="hopperSteak">洞穴跳鼠排</option>
+				<option value="brwBurger">掘地虫汉堡</option>
+				<option value="brew">蘑菇酿</option>
+				<option value="bacon">培根芝士三明治</option>
+				<option value="salad">蘑菇沙拉</option>
+				<option value="pentapus">五爪章鱼烧</option>
+				<option value="rootSoda">根茎苏打</option>
+				<option value="stuffedBat">酿蝙蝠</option>
+				<option value="underPie">地底派</option>
+				<option value="jonsSpecial">乔恩特餐</option>
+				<option class="xpbl" value="clams">黄油蒸蛤蜊</option>
+				<option class="xpbl" value="coffee">咖啡</option>
+				<option class="xpbl" value="kzozel">克佐泽尔</option>
+				<option class="xpbl" value="mutieStew">变异人炖菜</option>
+				<option class="xpbl" value="fillet">海蛇肉排</option>
+				<option value="allin">全押</option>
+				<option value="bloodyOligarch">血腥寡头</option>
+				<option value="cleanDeal">干净交易</option>
+				<option value="iceOfSpades">黑寡妇</option>
+				<option value="layLow">低调</option>
+				<option value="shroomMartini">心灵菇马提尼</option>
+				<option value="outwork">外包</option>
+				<option value="slackjaw">松颚鱼</option>
+				<option value="slampipe">击管</option>
+				<option value="SOTN">夜之戏法</option>
+				<option value="whiteDude">老白</option>
+			</select></p>
+
+			<form data-tooltip="自定义临时增益" autocomplete="off" onsubmit="return false">
+				<label><input type="radio" name="stat" value="STR" checked>力量</label>
+				<label><input type="radio" name="stat" value="DEX">灵巧</label>
+				<label><input type="radio" name="stat" value="AGI">敏捷</label>
+				<label><input type="radio" name="stat" value="CON">体质</label><br>
+				<label><input type="radio" name="stat" value="PER">感知</label>
+				<label><input type="radio" name="stat" value="WIL">意志</label>
+				<label><input type="radio" name="stat" value="INT">智力</label>
+				<input type="number" class="misc" name="buff" id="statbuff" min="-20" max="20" value="0" step="1"/>
+			</form>
+
+			<p data-tooltip="选择已装备的头部装备&#10;(仅限静态属性/技能加成)" class="mozjank">头部 <select autocomplete="off" id="head">
+				<option value="none" selected>无</option>
+				<option value="adGoggles">自适应目镜</option>
+				<option value="gasMask">防毒面具</option>
+				<option value="metalHelm">金属头盔</option>
+				<option value="balaclava">头套</option>
+				<option class="xpbl" value="deathgrin">死亡之笑</option>
+				<option class="xpbl" value="pacifier">安抚者</option>
+			</select></p>
+
+			<p data-tooltip="选择已装备的护甲套装&#10;(仅限静态属性/技能加成)" class="mozjank">躯干 <select autocomplete="off" id="suit">
+				<option value="none" selected>无</option>
+				<option value="hopperLeather">洞穴跳鼠皮</option>
+				<option value="mutantLeather">变异狗皮</option>
+				<option value="pigLeather">猪皮</option>
+				<option class="xpbl" value="leperSerpent">麻风蛇皮</option>
+				<option class="xpbl" value="heartbreaker">碎心蛇皮</option>
+				<option value="rathoundRegalia">鼠犬王袍</option>
+				<option value="tchNobleRobe">超特教徒华贵长袍</option>
+				<option value="tchortistRobe">超特教徒长袍</option>
+				<option value="tchVathosphore">超特教徒瓦索福尔护甲</option>
+				<option value="CAUarmor">化学突击队护甲</option>
+				<option value="blastSuit">防爆服</option>
+				<option value="jkkVest">JKK精美夹克</option>
+				<option value="praetorHeavy">禁卫披风维和者</option>
+				<option value="praetorHeavy">禁卫维和者</option>
+				<option value="praetorMed">禁卫胸甲</option>
+				<option class="xpbl" value="grayOfficer">灰军军官护甲</option>
+				<option class="xpbl" value="aegisSuit">神盾安保队员护甲</option>
+				<option class="xpbl" value="LemEngSuit">利莫里亚工程师制服</option>
+			</select></p>
+
+			<p data-tooltip="选择已装备的鞋类&#10;(仅限静态属性/技能加成)" class="mozjank">脚部 <select autocomplete="off" id="feet">
+				<option value="none" selected>无</option>
+				<option value="hopperLeather">洞穴跳鼠皮</option>
+				<option value="mutantLeather">变异狗皮</option>
+				<option value="pigLeather">猪皮</option>
+				<option class="xpbl" value="leperSerpent">麻风蛇皮</option>
+				<option class="xpbl" value="heartbreaker">碎心蛇皮</option>
+				<option value="luperchaun">定制扣带鞋</option>
+			</select></p>
+
+			<p data-tooltip="选择已装备的腰带" class="mozjank">腰带 <select autocomplete="off" id="belt">
+				<option value="none" selected>无</option>
+				<option value="trapper">陷阱腰带</option>
+				<option value="vigor">活力腰带</option>
+				<option value="bullet">子弹腰带</option>
+				<option class="xpbl" value="shell">霰弹带</option>
+				<option value="suicide">爆破大师腰带</option>
+				<option value="commando">突击队腰带</option>
+				<option value="tchBio">生物研究腰带</option>
+				<option value="tchChem">化学研究腰带</option>
+				<option value="tchElec">电子研究腰带</option>
+			</select></p>
+
+			<p data-tooltip="选择已装备的武器&#10;(仅限静态属性/技能加成和&#10;力量近战伤害加成)" class="mozjank">持有 <select autocomplete="off" id="hand">
+				<option value="none" selected>无</option>
+				<option value="knife">锯齿刀 / 战斗刀</option>
+				<option value="dagger">匕首</option>
+				<option value="glovelight">皮拳套</option>
+				<option value="gloveheavy">金属拳套</option>
+				<option value="sledgehammer">大锤</option>
+				<option class="xpbl" value="spear">长矛</option>
+				<option class="xpbl" value="sword">剑</option>
+				<option value="crowbar">撬棍</option>
+				<option value="jackknife">折叠刀</option>
+				<option value="powerFist">动力拳套</option>
+				<option value="cleaver">屠夫砍刀</option>
+				<option class="xpbl" value="savage">索米尔贝伦匕首/长矛/弯刀</option>
+				<option class="xpbl" value="skerder">索米尔贝伦锯齿匕首/长矛/剑</option>
+				<option class="xpbl" value="spearStaff">索米尔贝伦矛杖</option>
+				<option class="xpbl" value="spiritStaff">索米尔贝伦灵能杖</option>
+				<option class="xpbl" value="snakeStaff">蛇杖-霍德杜尔之形-</option>
+				<option value="phreakglove">遥控充能手甲</option>
+			</select></p>
+
+			<p data-tooltip="选择黑客/开锁工具" class="mozjank">工具 <select autocomplete="off" id="tool">
+				<option value="none" selected>无</option>
+				<option value="mk2tools">Mk II 骇入器/开锁器</option>
+				<option value="mk3tools">Mk III 骇入器/开锁器</option>
+				<option value="huxkey">万用骇客钥</option>
+			</select></p>
+		</details>
+
+		<h3>已选择专长</h3>
+		<div class="columns" id="chosenfeats"></div>
+
+	</section>
+	<footer>
+		剩余基础属性点 <mark id="basepts"> ?</mark>
+		<span class="footeritem first" id="help"><span class="tooltip">Shift + 点击按钮 = 加±5点<br>Ctrl + 点击按钮 = 加全部点<br><br>触屏：长按按钮可重复操作<br>触屏：在页面上左右滑动可翻页<br>触屏：长按并拖动可调整专长顺序<br><br>你可以拖放已选择的<br>专长来重新排序。<br>放置过早的专长会显示<br>删除线效果。</span>显示帮助 / 信息</span>
+	</footer>
+</article>
+<article id="skill">
+	<header>
+		<h2>Skills</h2><p id="skill_max" class="max" title="Minimize tab">X</p>
+	</header>
+	<section>
+		<h3>攻击</h3>
+		<p>     枪械:<mark id="gun"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p class="dlc2">重型枪械:<mark id="hea"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p> 投掷:<mark id="thr"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>弩:<mark id="cro"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>    近战:<mark id="mel"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>防御</h3>
+		<p>  闪避:<mark id="dod"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>躲闪:<mark id="eva"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>秘密手段</h3>
+		<p>      潜行:<mark id="ste"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>      黑客:<mark id="hac"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>  开锁:<mark id="loc"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>偷窃:<mark id="pic"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>        陷阱:<mark id="tra"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>制造</h3>
+		<p>  机械:<mark id="mec"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>电子:<mark id="ele"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>  化学:<mark id="che"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>    生物:<mark id="bio"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>  裁缝:<mark id="tai"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>灵能</h3>
+		<p>精神控制:<mark id="tho"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>  念动力:<mark id="psy"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>   热力操纵:<mark id="met"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p class="xpbl tldr">时间操纵:<mark id="tem"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+
+		<h3>社交</h3>
+		<p>  说服:<mark id="per"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>恐吓:<mark id="ind"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+		<p>  商业:<mark id="mer"><b>    ?</b><b>     </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
+	</section>
+	<footer>
+		剩余技能点 <mark id="skillpts">   ?</mark>
+	</footer>
+</article>
+<article id="feats">
+	<header>
+		<h2>Feats</h2><p id="feats_max" class="max" title="Minimize tab">X</p>
+		<input type="text" class="misc filter" id="featfilter" placeholder="Filter..." autocomplete="off" spellcheck="false"/>
+	</header>
+	<section>
+		<p><input type="button" class="trainable feat" id="43" value="灵能亲和"/></p>
+		<p><input type="button" class="feat" id="8" value="身体调节"/></p>
+		<p><input type="button" class="feat" id="79" value="专业知识"/></p>
+		<p><input type="button" class="feat" id="36" value="灵活"/></p>
+		<p><input type="button" class="feat" id="37" value="扒窃大师"/></p>
+		<p><input type="button" class="feat" id="38" value="机会主义者"/></p>
+		<p><input type="button" class="feat" id="39" value="搬运鼠"/></p>
+		<p><input type="button" class="feat" id="40" value="偏执狂"/></p>
+		<p><input type="button" class="feat" id="47" value="快速口袋"/></p>
+		<p><input type="button" class="feat" id="49" value="鲁莽"/></p>
+		<p><input type="button" class="feat" id="54" value="嗅探"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="127" value="挪移"/></p>
+		<p><input type="button" class="feat" id="97" value="稳健步伐"/></p>
+		<p><input type="button" class="feat" id="163" value="多才多艺"/></p>
+		<p><input type="button" class="feat" id="1" value="瞄准射击"/></p>
+		<p><input type="button" class="feat" id="69" value="护甲改装"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="233" value="负重猎鼠"/></p>
+		<p><input type="button" class="feat" id="4" value="窃贼"/></p>
+		<p><input type="button" class="feat" id="72" value="制衣匠"/></p>
+		<p><input type="button" class="feat" id="105" value="肉体投射"/></p>
+		<p><input type="button" class="feat" id="14" value="医生"/></p>
+		<p><input type="button" class="feat" id="80" value="高速代谢"/></p>
+		<p><input type="button" class="feat" id="83" value="枪械迷"/></p>
+		<p><input type="button" class="feat" id="23" value="枪手"/></p>
+		<p><input type="button" class="feat" id="24" value="重拳"/></p>
+		<p><input type="button" class="feat" id="25" value="游击战"/></p>
+		<p><input type="button" class="feat" id="85" value="泰坦"/></p>
+		<p><input type="button" class="feat" id="34" value="神箭手"/></p>
+		<p><input type="button" class="feat" id="231" value="博学者"/></p>
+		<p><input type="button" class="feat" id="41" value="能源管理"/></p>
+		<p><input type="button" class="feat" id="44" value="精神错乱"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="130" value="盾臂"/></p>
+		<p><input type="button" class="feat" id="93" value="皮匠"/></p>
+		<p><input type="button" class="feat" id="57" value="冲刺"/></p>
+		<p><input type="button" class="feat" id="95" value="坚忍"/></p>
+		<p><input type="button" class="feat" id="59" value="火力压制"/></p>
+		<p><input type="button" class="feat" id="98" value="生存本能"/></p>
+		<p><input type="button" class="feat" id="104" value="念力波动"/></p>
+		<p><input type="button" class="feat" id="99" value="厚实头骨"/></p>
+		<p><input type="button" class="feat" id="63" value="宁静"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="131" value="先射为强"/></p>
+		<p><input type="button" class="feat" id="77" value="拆解"/></p>
+		<p><input type="button" class="feat" id="29" value="潜行者"/></p>
+		<p><input type="button" class="feat" id="45" value="痛打"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="176" value="第六发"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="149" value="投矛"/></p>
+		<p><input type="button" class="feat" id="68" value="怒吼"/></p>
+		<p><input type="button" class="feat" id="5" value="额叶损伤"/></p>
+		<p><input type="button" class="feat" id="13" value="撩阴腿"/></p>
+		<p><input type="button" class="feat" id="190" value="灵能容量扩充"/></p>
+		<p><input type="button" class="feat" id="20" value="念力使者"/></p>
+		<p><input type="button" class="feat" id="154" value="高技术力"/></p>
+		<p><input type="button" class="feat" id="30" value="碎膝射击"/></p>
+		<p><input type="button" class="feat" id="32" value="闪电拳"/></p>
+		<p><input type="button" class="feat" id="89" value="点射"/></p>
+		<p><input type="button" class="feat" id="48" value="快速布置"/></p>
+		<p><input type="button" class="feat" id="58" value="稳定瞄准"/></p>
+		<p><input type="button" class="feat" id="66" value="阴毒兵器"/></p>
+		<p><input type="button" class="feat" id="0" value="武器匠"/></p>
+		<p><input type="button" class="feat" id="128" value="制弩匠"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="221" value="暴力瞄准"/></p>
+		<p><input type="button" class="feat" id="107" value="震荡射击"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="134" value="连续统波纹"/></p>
+		<p><input type="button" class="feat" id="9" value="致残打击"/></p>
+		<p><input type="button" class="feat" id="78" value="逃脱专家"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="146" value="抵御"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="140" value="剑刃乱舞"/></p>
+		<p><input type="button" class="feat" id="22" value="手雷专家"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="175" value="铁掌抓握"/></p>
+		<p><input type="button" class="feat" id="35" value="精神破坏"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="153" value="招架"/></p>
+		<p><input type="button" class="feat" id="61" value="热动平衡"/></p>
+		<p><input type="button" class="feat" id="64" value="陷阱专家"/></p>
+		<p><input type="button" class="feat" id="70" value="弹道学"/></p>
+		<p><input type="button" class="feat" id="145" value="烹调射击"/></p>
+		<p><input type="button" class="feat" id="12" value="挡拆"/></p>
+		<p><input type="button" class="feat" id="27" value="剧毒"/></p>
+		<p><input type="button" class="feat" id="168" value="强化徒手格斗"/></p>
+		<p><input type="button" class="feat" id="31" value="背水一战"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="150" value="引导射击"/></p>
+		<p><input type="button" class="feat" id="87" value="神经学"/></p>
+		<p><input type="button" class="feat" id="90" value="应用物理学家"/></p>
+		<p><input type="button" class="feat" id="46" value="纵火狂"/></p>
+		<p><input type="button" class="feat" id="50" value="推销员"/></p>
+		<p><input type="button" class="feat" id="53" value="狙击"/></p>
+		<p><input type="button" class="feat" id="2" value="伏击"/></p>
+		<p><input type="button" class="feat" id="6" value="恶意中伤"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="139" value="斩首"/></p>
+		<p><input type="button" class="feat" id="18" value="弱点暴露"/></p>
+		<p><input type="button" class="feat" id="19" value="花式步法"/></p>
+		<p><input type="button" class="feat" id="21" value="全自动"/></p>
+		<p><input type="button" class="feat" id="209" value="枪斗术"/></p>
+		<p><input type="button" class="feat" id="28" value="低温症"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="148" value="穿刺"/></p>
+		<p><input type="button" class="feat" id="86" value="疯狂化学家"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="144" value="弹丸风暴"/></p>
+		<p><input type="button" class="feat" id="88" value="定身"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="227" value="抛物线"/></p>
+		<p><input type="button" class="feat" id="42" value="预谋"/></p>
+		<p><input type="button" class="feat" id="103" value="灵能静电"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="142" value="还击"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="170" value="盾击"/></p>
+		<p><input type="button" class="feat" id="65" value="直觉闪避"/></p>
+		<p><input type="button" class="feat" id="67" value="摔跤"/></p>
+		<p><input type="button" class="feat" id="3" value="碎骨者"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="135" value="心理时间加速"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="143" value="枪管瞄准"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="222" value="杀戮弹雨"/></p>
+		<p><input type="button" class="feat" id="10" value="寒冰刺骨"/></p>
+		<p><input type="button" class="feat" id="15" value="机动躲闪"/></p>
+		<p><input type="button" class="feat" id="81" value="致命投掷"/></p>
+		<p><input type="button" class="feat" id="82" value="守卫森严"/></p>
+		<p><input type="button" class="feat" id="100" value="冥想"/></p>
+		<p><input type="button" class="feat" id="101" value="灵能狂热"/></p>
+		<p><input type="button" class="feat" id="91" value="快速开火"/></p>
+		<p><input type="button" class="feat" id="92" value="撕裂者"/></p>
+		<p><input type="button" class="feat" id="230" value="闷棍"/></p>
+		<p><input type="button" class="feat" id="55" value="特工"/></p>
+		<p><input type="button" class="feat" id="56" value="特殊战术"/></p>
+		<p><input type="button" class="feat" id="60" value="嗜血"/></p>
+		<p><input type="button" class="feat" id="62" value="三分球"/></p>
+		<p><input type="button" class="feat" id="11" value="割喉"/></p>
+		<p><input type="button" class="feat" id="189" value="灵能神经适应"/></p>
+		<p><input type="button" class="feat" id="188" value="灵能神经优化"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="126" value="大杀特杀"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="147" value="长矛守御"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="172" value="横扫"/></p>
+		<p><input type="button" class="feat" id="71" value="闪电战"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="171" value="密不透风"/></p>
+		<p><input type="button" class="feat" id="74" value="集中火力"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="136" value="未来向"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="223" value="重金属"/></p>
+		<p><input type="button" class="feat" id="211" value="远程医生"/></p>
+		<p><input type="button" class="feat" id="51" value="神射手"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="228" value="震荡弹"/></p>
+		<p><input type="button" class="feat" id="7" value="组合拳"/></p>
+		<p><input type="button" class="feat" id="102" value="神经过载"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="151" value="完美散射"/></p>
+		<p><input type="button" class="feat" id="210" value="子弹时间"/></p>
+		<p><input type="button" class="feat" id="17" value="处决"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="152" value="破碎混沌"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="224" value="嗜血狂魔"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="129" value="残暴"/></p>
+		<p><input type="button" class="feat" id="75" value="强力暴击"/></p>
+		<p><input type="button" class="feat" id="76" value="致命诱捕"/></p>
+		<p><input type="button" class="feat" id="106" value="元素箭矢"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="132" value="血狂乱"/></p>
+		<p><input type="button" class="feat" id="33" value="控制心核"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="141" value="杀戮风暴"/></p>
+		<p><input type="button" class="feat" id="96" value="超级猛击"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="133" value="出其不意"/></p>
+		<p><input type="button" class="feat" id="73" value="突击队员"/></p>
+		<p><input type="button" class="feat" id="16" value="剔骨"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="225" value="清空弹匣"/></p>
+		<p><input type="button" class="feat" id="212" value="弹性念力"/></p>
+		<p><input type="button" class="feat" id="94" value="分裂投掷"/></p>
+		<p class="xpbl"><input type="button" class="feat" id="232" value="专家"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="226" value="诡谲弹道"/></p>
+		<p class="dlc2"><input type="button" class="feat" id="229" value="爆破手"/></p>
+		<p><input type="button" class="feat" id="84" value="重量级"/></p>
+
+
+		<p class="core"><input type="button" class="veteran feat" id="114" value="高级灵能亲和"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="124" value="自重训练"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="115" value="健美"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="121" value="报废者"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="184" value="强效施放: 热力操纵"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="185" value="强效施放: 念动力"/></p>
+		<p class="xpbl"><input type="button" class="veteran feat" id="186" value="强效施放: 时间操纵"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="187" value="强效施放: 精神控制"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="116" value="专家闪避"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="117" value="专家躲闪"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="165" value="专家冲刺"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="118" value="专家投掷"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="169" value="专家徒手格斗"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="122" value="战斗反应"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="123" value="逃跑反应"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="177" value="敏捷增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="178" value="体质增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="179" value="灵巧增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="180" value="智力增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="181" value="感知增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="182" value="力量增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="183" value="意志增强"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="167" value="钢铁意志"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="125" value="供应商"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="138" value="咒语"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="120" value="怪物杀手"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="119" value="连环杀手"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="164" value="细致入微"/></p>
+		<p class="xpbl"><input type="button" class="veteran feat" id="162" value="浪里白条"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="166" value="大步流星"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="137" value="特技演员"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="112" value="淬炼: 酸"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="111" value="淬炼: 冷"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="113" value="淬炼: 电"/></p>
+		<p class="core"><input type="button" class="veteran feat" id="110" value="淬炼: 热"/></p>
+
+		<p><input type="button" class="trainable feat" id="109" value="渔夫"/></p>
+		<p><input type="button" class="trainable feat" id="26" value="猎人"/></p>
+		<p><input type="button" class="trainable feat" id="108" value="回想独白"/></p>
+		<p><input type="button" class="trainable feat" id="191" value="强力精神支配"/></p>
+		<p><input type="button" class="trainable feat" id="217" value="超越寒冷"/></p>
+		<p><input type="button" class="trainable feat" id="218" value="飘啊飘~"/></p>
+		<p><input type="button" class="trainable feat" id="219" value="制鞋匠"/></p>
+		<p><input type="button" class="trainable feat" id="220" value="微调"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="158" value="海战"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="159" value="高级海战"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="160" value="艇上突刺"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="161" value="海上对决"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="155" value="哲学"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="156" value="哲学II"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="157" value="哲学III"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="173" value="肉体恐怖"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="174" value="外域异象"/></p>
+
+		<p class="xpbl"><input type="button" class="trainable feat" id="192" value="纹身：保护国"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="193" value="纹身：JKK"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="194" value="纹身：无政府状态"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="195" value="纹身：核心科技"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="196" value="纹身：禁卫安保"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="197" value="纹身：神盾公司"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="198" value="纹身：'玛格纳'虚空形态"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="199" value="纹身：影石"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="200" value="纹身：恶兽"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="201" value="纹身：超特"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="202" value="纹身：超特学院"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="203" value="纹身：巴洛尔之眼"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="204" value="纹身：南门站"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="205" value="纹身：海盗"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="206" value="纹身：漂泊者"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="213" value="纹身：噬艇者"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="214" value="纹身：胖子"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="215" value="纹身：漆黑之蝎"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="216" value="纹身：憎恶"/></p>
+
+		<p class="xpbl"><input type="button" class="trainable feat" id="207" value="怪物怒吼"/></p>
+		<p class="xpbl"><input type="button" class="trainable feat" id="208" value="粘性粘液腺"/></p>
+	</section>
+	<footer>
+		剩余专长点 <mark id="featpts"> ?</mark>
+		<label class="footeritem second">紧凑型  <input type="checkbox" autocomplete="off" id="compactfeats"/></label>
+		<label class="footeritem first" >显示所有 <input type="checkbox" autocomplete="off" id="showallfeats"/></label>
+	</footer>
+</article>
+<article id="specs">
+	<header>
+		<h2>Specialization</h2><p id="specs_max" class="max" title="Minimize tab">X</p>
+		<input type="text" class="misc filter" id="specfilter" placeholder="Filter..." autocomplete="off" spellcheck="false"/>
+	</header>
+	<section>
+	</section>
+	<footer>
+		剩余专精点 <mark id="specpts"> ?</mark>
+		<label class="footeritem first">显示所有专精 <input type="checkbox" autocomplete="off" id="showallspecs"/></label>
+	</footer>
+</article>
+</main>
+<nav id="nav">
+	<p class="min hide" id="base_min">Base</p>
+	<p class="min hide" id="skill_min">Skills</p>
+	<p class="min hide" id="feats_min">Feats</p>
+	<p class="min hide" id="specs_min">Spec.</p>
+</nav>
+<aside>Changelog
+2015-02-21: build tool started
+2015-05-10: load from url
+2015-06-13: feat icons
+2015-06-21: new host, localstorage save
+2015-06-26: food buffs
+2015-07-04: skill damage multiplier
+2016-03-25: house crafting bonuses, feat filter
+2016-04-15: difficulty
+2016-10-22: multiple saves, full feat text, expansion support
+2016-11-07: equipment system
+2017-06-24: skill bonus breakdown tooltips
+2017-09-17: specializations
+2017-11-12: new save system
+2018-09-27: removed expedition easter egg
+2018-10-25: export/import saved builds
+2019-07-01: cloudflare
+2022-02-22: final underrail update ;_;
+2023-11-01: heavy duty
+</aside>
+</body>
+</html>
