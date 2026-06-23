@@ -231,41 +231,45 @@
 			cf.classList.toggle('veteran', this.isVeteran);
 			cf.classList.toggle('trainable', !this.isPurchasable);
 			cf.onmousedown = dragStart;
-			cf.onmouseover = dragOver;
-			cf.onmouseup   = dragStop;
+			// 移除 onmouseover 和 onmouseup（改用 document 级监听）
 			cf.ontouchstart  = dragStart;
-			cf.ontouchmove   = ()=>touchSystem.dragHandler(event);
-			cf.ontouchend    = dragStop;
-			cf.ontouchcancel = dragStop;
+			cf.ontouchmove   = (e) => touchSystem.dragHandler(e);
+			cf.ontouchend    = dragEnd;
+			cf.ontouchcancel = dragEnd;
 			cf.id = this.cfid;
 			cf.ogId = this.id;
 			return cf;
 		}
 		toggle() {
-
 			if (this.id === 231) { // Polymath
-				if (!this.owned) {
-					// ABOUT to be taken
-					this.polyLevel = lvl.value;
-					skillPoints._value += 15;
-				} else {
-					// ABOUT to be removed
-					const levelsWithPoly = lvl.value - this.polyLevel;
-					skillPoints._value -= 15 + levelsWithPoly * 5;
-				}
+				// 不需要额外操作，calcSkillPoints 会自动处理
 			}
-
 			if (this.id === 232) { // Specialist
-				if (!this.owned) {
-					// ABOUT to be taken
-					this.speclevel = lvl.value;
-					specPoints._value += 1;
-				} else {
-					// ABOUT to be removed
-					const levelsWithSpec = lvl.value - this.speclevel;
-					specPoints._value -= 1 + levelsWithSpec * 1;
-				}
+				// 不需要额外操作，calcSpecPoints 会自动处理
 			}
+			//if (this.id === 231) { // Polymath
+			//	if (!this.owned) {
+			//		 ABOUT to be taken
+			//		this.polyLevel = lvl.value;
+			//		skillPoints._value += 15;
+			//	} else {
+			//		 ABOUT to be removed
+			//		const levelsWithPoly = lvl.value - this.polyLevel;
+			//		skillPoints._value -= 15 + levelsWithPoly * 5;
+			//	}
+			//}
+
+			//if (this.id === 232) { // Specialist
+			//	if (!this.owned) {
+			//		 ABOUT to be taken
+			//		this.speclevel = lvl.value;
+			//		specPoints._value += 1;
+			//	} else {
+			//		 ABOUT to be removed
+			//		const levelsWithSpec = lvl.value - this.speclevel;
+			//		specPoints._value -= 1 + levelsWithSpec * 1;
+			//	}
+			//}
 
 
 			if (this.owned) {
@@ -390,7 +394,7 @@
 	}
 
 	/* misc. global state */
-	const maxSkill = lvl => 10 + 5*lvl, maxBase = lvl => 10 + Math.min(25, lvl)/4 |0, version = '1.2.0.0';
+	const maxSkill = lvl => 10 + 5*lvl, maxBase = lvl => 10 + Math.min(25, lvl)/4 |0, version = '1.3.1.2';
 	let dragging = false, draggedElem, loading, fileData, expedition = false, heavyduty = false;
 
 	/* game data, used with permission from Stygian Software */
@@ -1537,9 +1541,12 @@
 		for (var id in skills) {
 			used += skills[id].value;
 		}
-
-		const total = 80 + lvl.value * 40 + polymathBonus;
-		return total - used;
+		let total = 80 + lvl.value * 40;
+			// 博学者：按 1 级点出，额外获得 15 + (当前等级-1)*5
+			if (feats[231] && feats[231].owned) {
+				total += 15 + (lvl.value - 1) * 5;
+			}
+			return total - used;
 	}
 	let polymathBonus = 0;
 	let specialistBonus = 0;
@@ -1554,11 +1561,16 @@
 		return total-used;
 	}
 	function calcSpecPoints() {
-		let used = 0, total = Math.max(0, lvl.value-15);
+		let used = 0;
 		for (var id in specs) {
 			used += specs[id].value;
 		}
-		return total-used;
+		let total = Math.max(0, lvl.value - 15);
+		// 专家：按 16 级点出，额外获得 1 + (当前等级-16)*1
+		if (feats[232] && feats[232].owned) {
+			total += 1 + Math.max(0, lvl.value - 16);
+		}
+		return total - used;
 	}
 	function resetBuild(resetOpts) {
 		if (resetOpts) {
@@ -1910,9 +1922,9 @@
 				skillPoints._value += sign * 40;
 
 				// Extra +5 ONLY if Polymath already owned
-				if (feats[231]?.owned) {
-					skillPoints._value += sign * 5;
-				}
+				//if (feats[231]?.owned) {
+				//	skillPoints._value += sign * 5;
+				//}
 
 
 
@@ -1921,9 +1933,9 @@
 				if (lvl.value % 4 === 0 && lvl.value < 25) { basePoints._value += sign; }
 
 				// Extra +1 ONLY if Specialist already owned
-				if (feats[232]?.owned) {
-					if (lvl.value > 15) { specPoints._value += sign; }
-				}
+				//if (feats[232]?.owned) {
+				//	if (lvl.value > 15) { specPoints._value += sign; }
+				//}
 				if (lvl.value > 15) { specPoints._value += sign; }
 				if (decrease) { lvl._value += sign; }
 
@@ -1952,6 +1964,10 @@
 		}
 	}
 	function updatePage() {
+		// 先重新计算受专长影响的点数
+		skillPoints._value = calcSkillPoints();
+		specPoints._value = calcSpecPoints();
+	
 		lvl.update();
 		basePoints.update();
 		skillPoints.update();
@@ -2058,24 +2074,55 @@
 		case 'Enter': const e = document.getElementById('newsave'); e && e.click(); break;
 		}
 	}
-	function dragStart() {
-		dragging = true;
-		draggedElem = this;
-	}
-	function dragStop() {
-		dragging = false;
-		updatePage();
-	}
-	function dragOver() {
-		if (dragging) {
-			let dropTarget = this;
-			if (indexOf(draggedElem) < indexOf(dropTarget)) {
-				dropTarget = dropTarget.nextSibling;
+	
+		function performDragSort(dropTarget, clientY) {
+		if (!dropTarget || dropTarget === draggedElem) return;
+		const rect = dropTarget.getBoundingClientRect();
+		const midY = rect.top + rect.height / 2;
+		const draggedIdx = indexOf(draggedElem);
+		const targetIdx = indexOf(dropTarget);
+
+		if (clientY < midY) {
+			// 插入到目标前面
+			if (draggedIdx > targetIdx) {
+				draggedElem.parentNode.insertBefore(draggedElem, dropTarget);
+				updateChosenFeats();
 			}
-			draggedElem.parentNode.insertBefore(draggedElem, dropTarget);
-			updateChosenFeats();
+		} else {
+			// 插入到目标后面
+			if (draggedIdx < targetIdx) {
+				const next = dropTarget.nextSibling;
+				draggedElem.parentNode.insertBefore(draggedElem, next);
+				updateChosenFeats();
+			}
 		}
 	}
+	
+		function dragStart(e) {
+		dragging = true;
+		draggedElem = this;
+		if (e.type === 'mousedown') {
+			document.addEventListener('mousemove', dragMove);
+			document.addEventListener('mouseup', dragEnd);
+			e.preventDefault();
+		}
+	}
+
+		function dragMove(e) {
+			if (!dragging) return;
+			const target = document.elementFromPoint(e.clientX, e.clientY);
+			if (!target) return;
+			const dropTarget = target.closest('.chosenfeat');
+			if (!dropTarget || dropTarget === draggedElem) return;
+			performDragSort(dropTarget, e.clientY);
+		}
+
+		function dragEnd(e) {
+			dragging = false;
+			document.removeEventListener('mousemove', dragMove);
+			document.removeEventListener('mouseup', dragEnd);
+			updatePage();
+		}
 
 	/* responsive crap */
 	const touchSystem = {
@@ -2128,20 +2175,20 @@
 			this.tab = null;
 			this.swiping = false;
 		},
-		dragHandler: function(event) {
-			if (dragging && this.holding && !this.panning && !this.swiping) {
-				this.dragging = true;
-				event.preventDefault();
-				try {
-					let dropTarget = document.elementFromPoint(event.touches[0].pageX, event.touches[0].pageY);
-					if (indexOf(draggedElem) < indexOf(dropTarget)) {
-						dropTarget = dropTarget.nextSibling;
-					}
-					draggedElem.parentNode.insertBefore(draggedElem, dropTarget);
-					updateChosenFeats();
-				} catch(e) {}
-			}
-		},
+			dragHandler: function(event) {
+		if (dragging && this.holding && !this.panning && !this.swiping) {
+			this.dragging = true;
+			event.preventDefault();
+			try {
+				const touch = event.touches[0];
+				const target = document.elementFromPoint(touch.pageX, touch.pageY);
+				if (!target) return;
+				const dropTarget = target.closest('.chosenfeat');
+				if (!dropTarget || dropTarget === draggedElem) return;
+				performDragSort(dropTarget, touch.clientY);
+			} catch(e) {}
+		}
+	},
 		scrollHandler: function(event) {
 			this.panning = true;
 		},
@@ -2261,7 +2308,7 @@
 		lateFeatInit(feats);
 		lateFeatInit(xpblFeats);
 		lateFeatInit(dlc2Feats);
-		document.getElementById('help').firstChild.innerHTML += '<br><br>Underrail version '+version;
+		document.getElementById('help').firstChild.innerHTML += '<br><br>Underrail 版本 '+version;
 		for (var elem of document.querySelectorAll('input[type=button]')) {
 			if (elem.value.length === 1) {
 				elem.title = `Ctrl+单击: ${elem.value}全部点数\nShift+单击: ${elem.value}5 点数`;
@@ -2280,6 +2327,7 @@
 		document.addEventListener('touchmove', () => touchSystem.moveHandler(event), {passive:false});
 		document.getElementById('base').children[1].onscroll = () => touchSystem.scrollHandler(event);
 		window.onresize = () => tabSystem.checkWindowSize();
+
 	};
 
 })();

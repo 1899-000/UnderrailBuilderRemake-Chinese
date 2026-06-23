@@ -32,7 +32,8 @@
 		<p data-tooltip="会加成：&#10; 黑客&#10; 机械&#10; 电子&#10; 化学&#10; 生物&#10; 裁缝&#10; 商业&#10;&#10; 灵能回复">智力:<mark id="INT"><b>   ?</b><b>    </b></mark><input type="button" value="+"/><input type="button" value="-"/></p>
 
 		<h3>属性统计</h3>
-		<div class="columns">
+		<details class="columns">
+		<summary data-tooltip="显示/隐藏属性统计">显示/隐藏</summary>
 			<p data-tooltip="受到以下影响:&#10; 等级&#10; 体质&#10; 游戏难度">血量: <mark id="hp">   ?</mark></p>
 			<p data-tooltip="受到以下影响:&#10; 专长">灵能值: <mark id="psip">   ?</mark></p>
 			<p data-tooltip="受到以下影响:&#10; 灵能值" class="tldr">灵能储量: <mark id="psi5">   ?</mark></p>
@@ -45,17 +46,18 @@
 			<p data-tooltip="受到以下影响:&#10; 等级&#10; 意志">坚毅: <mark id="res">   ?</mark></p>
 			<p data-tooltip="受到以下影响:&#10; 等级&#10; 感知">探查: <mark id="det">   ?</mark></p>
 			<p data-tooltip="受到以下影响:&#10; 探查&#10; 陷阱技能" class="tldr">陷阱探查: <mark id="trd">   ?</mark></p>
-		</div>
+		</details>
 
 		<h3>选项</h3>
-		<div class="columns">
+		<details class="columns">
+		<summary data-tooltip="显示/隐藏选项">显示/隐藏</summary>
 			<p data-tooltip="设置等级">等级: <mark id="lvl"> ?</mark><input type="button" value="+"/><input type="button" value="-"/></p>
 			<p data-tooltip="显示来自游戏DLC的扩展内容：远征DLC"><label class="xpblhue">远征 DLC <input type="checkbox" autocomplete="off" id="expedition"/></label></p>
 			<p data-tooltip="显示来自游戏DLC的扩展内容：重任DLC"><label class="">重任 DLC <input type="checkbox" autocomplete="off" id="heavyduty"/></label></p>
 			<p data-tooltip="将当前构建另存为...&#10;加载构建"><input class="misc" type="button" id="save" value=" 保存 "/><input class="misc" type="button" id="load" value=" 加载 "/></p>
 			<p data-tooltip="获取要构建的URL而不保存&#10;重置当前构建和选项"><input class="misc" type="button" id="URL" value=" 链接 "/><input class="misc" type="button" id="reset" value=" 重置 "/></p>
 			<p style="display:none;" data-tooltip="Switch between Underrail and Infusion modes"><label class="infusion">Infusion mode <input type="checkbox" autocomplete="off" id="infusion"/></label></p>
-		</div>
+		</details>
 
 		<h3>额外增益</h3>
 		<details class="columns"><summary data-tooltip="难度和各种属性/技能奖励&#10;这些不会保存在构建链接中">显示/隐藏</summary>
@@ -202,7 +204,7 @@
 	</section>
 	<footer>
 		剩余基础属性点 <mark id="basepts"> ?</mark>
-		<span class="footeritem first" id="help"><span class="tooltip">Shift + 点击按钮 = 加±5点<br>Ctrl + 点击按钮 = 加全部点<br><br>触屏：长按按钮可重复操作<br>触屏：在页面上左右滑动可翻页<br>触屏：长按并拖动可调整专长顺序<br><br>你可以拖放已选择的<br>专长来重新排序。<br>放置过早的专长会显示<br>删除线效果。</span>显示帮助 / 信息</span>
+		<span class="footeritem first" id="help"><span class="tooltip">Shift + 点击按钮 = 加±5点<br>Ctrl + 点击按钮 = 加全部点<br>Ctrl + 鼠标滚轮 = 调整字体大小<br>（推荐90%或100%缩放）<br><br>触屏：长按按钮可重复操作<br>触屏：在页面上左右滑动可翻页<br>触屏：长按并拖动可调整专长顺序<br><br>你可以拖放已选择的<br>专长来重新排序。<br>放置过早的专长会显示<br>删除线效果。<br><br>构建器版本_v0.2<br></span>显示帮助 / 信息</span>
 	</footer>
 </article>
 <article id="skill">

@@ -410,9 +410,63 @@
         font-family: "PF Tempesta Seven Compressed";
     }
 
-    #chosenfeats.columns {
-        column-rule: 1px outset var(--dn2);
-    }
+
+/* 强制多列模式容器 */
+
+#chosenfeats {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible;  /* 防止溢出裁剪 */
+    
+     display: block;            /* 确保是块级元素 */
+    column-count: 2 !important; /* 无论宽度多窄，强制分为 2 列 */
+    column-fill: balance !important; /* 强制平衡两列高度，实现均分（如30个专长分15/15） */
+    column-gap: 10px;          /* 两列之间的间距，可根据需要调整 */
+    column-width: auto !important; /* 禁用自动宽度触发的单列转换 */
+    
+    
+}
+
+/* 每个专长条目的样式 */
+#chosenfeats .chosenfeat {
+    display: block;
+    break-inside: avoid;       /* 防止单个专长条目被切断跨列 */
+    page-break-inside: avoid;
+    margin-bottom: 2px;
+    padding: 2px 4px;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;       /* 强制单行显示 */
+    overflow: hidden;
+    text-overflow: ellipsis;   /* 文字过长显示省略号 */
+}
+
+#chosenfeats.multi-column {
+    column-fill: auto;
+    column-gap: 16px;
+    padding: 4px 0;
+}
+/* 每个专长条目不断列 */
+#chosenfeats.multi-column .chosenfeat {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 2px;
+    padding: 2px 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+/* 单列模式下还原 */
+#chosenfeats:not(.multi-column) .chosenfeat {
+    break-inside: auto;
+    page-break-inside: auto;
+}
+
+
+/* 覆盖之前可能存在的 .columns 干扰 */
+#chosenfeats.columns {
+    column-width: auto !important;
+    column-count: 2 !important;
+}
 
     .draggable:hover,.draggable:active {
         background: var(--hue3) url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTQgMjUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRleHQgeD0iMCIgeT0iMjBweCIgZm9udC1zaXplPSIyNSIgZmlsbD0iI0UxNzEwMCI+4oeVPC90ZXh0Pjwvc3ZnPg==") no-repeat center right;
